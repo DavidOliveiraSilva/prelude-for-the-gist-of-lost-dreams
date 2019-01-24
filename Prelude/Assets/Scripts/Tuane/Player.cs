@@ -7,6 +7,9 @@ public class Player : MonoBehaviour {
     public float dashDuration;
     public float dashSpeed;
     public int dashLoad;
+    public float lifeTime;
+    public float maxLifeTime;
+    private bool dead;
     private float dashing;
     private float dashAngle;
     private bool hasControl;
@@ -48,6 +51,11 @@ public class Player : MonoBehaviour {
             }
         }
 
+        lifeTime -= Time.deltaTime;
+        if(lifeTime <= 0) {
+            dead = true;
+        }
+
         if(dashing > 0) {
             dashing -= Time.deltaTime;
             rb.velocity = new Vector2(dashSpeed*Time.deltaTime*speed*Mathf.Cos(dashAngle), dashSpeed * Time.deltaTime * speed * Mathf.Sin(dashAngle));
@@ -58,6 +66,12 @@ public class Player : MonoBehaviour {
             }
         }
 	}
+    public void AddLifeTime(float value) {
+        lifeTime += value;
+        if(lifeTime > maxLifeTime) {
+            lifeTime = maxLifeTime;
+        }
+    }
     void Dash() {
         float hor = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
