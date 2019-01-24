@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50034949501848480}
   m_Layer: 0
   m_Name: Tuane
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,6 +103,8 @@ MonoBehaviour:
   dashDuration: 0.1
   dashSpeed: 5
   dashLoad: 2
+  lifeTime: 30
+  maxLifeTime: 60
 --- !u!212 &212197059125867602
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -135,8 +137,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1550294659
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b042883f755141f43806a00d12b292b6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
