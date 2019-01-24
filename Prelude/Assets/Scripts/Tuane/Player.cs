@@ -88,4 +88,5 @@ public class Player : MonoBehaviour {
         dashing = dashDuration;
         hasControl = false;
     }
+    
 }
