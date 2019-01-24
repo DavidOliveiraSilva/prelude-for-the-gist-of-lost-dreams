@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Crystal
+  - Key
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -40,4 +43,34 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 4010507471
+    locked: 0
+  - name: Background 2
+    uniqueID: 2625938373
+    locked: 0
+  - name: Level
+    uniqueID: 296487273
+    locked: 0
+  - name: Collectable
+    uniqueID: 1250673761
+    locked: 0
+  - name: Effects 1
+    uniqueID: 112315405
+    locked: 0
+  - name: Interactive Scenario
+    uniqueID: 3543496997
+    locked: 0
+  - name: Player
+    uniqueID: 1550294659
+    locked: 0
+  - name: Effects 2
+    uniqueID: 1071822847
+    locked: 0
+  - name: Front
+    uniqueID: 2841746101
+    locked: 0
+  - name: HUD
+    uniqueID: 3292007821
     locked: 0
