@@ -1,15 +1,28 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using System.Collections; 
+using System.Collections.Generic; 
+
+
 
 public class SaveSystem : MonoBehaviour {
 
-	public SaveGameData saveGameData;
+	public SaveData saveGameData;
     const string folderName = "SavesData";
     const string fileExtension = ".dat";
 
+	public class dataComparator : IComparer {
+        public int Compare(object x, object y)
+        {
+            return ((SaveData)x).id.CompareTo(((SaveData)y).id);
+        }
+
+    } 
+
     void Update ()
     {
+		/* 
         if (Input.GetKeyDown (KeyCode.S))
         {
             string folderPath = Path.Combine(Application.persistentDataPath, folderName);
@@ -27,9 +40,10 @@ public class SaveSystem : MonoBehaviour {
             if(filePaths.Length > 0)
                 saveGameData = LoadGame (filePaths[0]);
         }
+		*/
     }
 
-	public static void SaveGame(SaveGameData data) {
+	public static void SaveGame(SaveData data) {
 		string folderPath = Path.Combine(Application.persistentDataPath, folderName);
 		if (!Directory.Exists (folderPath))
 			Directory.CreateDirectory (folderPath);            
@@ -38,7 +52,7 @@ public class SaveSystem : MonoBehaviour {
 		SaveGame (data, dataPath);
 	}
 
-    public static void SaveGame (SaveGameData data, string path)
+    public static void SaveGame (SaveData data, string path)
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
@@ -48,13 +62,31 @@ public class SaveSystem : MonoBehaviour {
         }
     }
 
-	public static SaveGameData LoadGame (int id) {
+	public static ArrayList LoadAll() {
+		ArrayList retu = null;
 		string[] filePaths = GetFilePaths ();
-        SaveGameData ret = null;
+        
+		if(filePaths.Length > 0) {
+			//maneira temporária
+			retu = new ArrayList();
+			for (int i = 0; i < filePaths.Length; i++) {
+				retu.Add(LoadGame (filePaths[i]));	
+			}
+			IComparer comp = new dataComparator();
+			retu.Sort(comp);
+		}
+		
+		
+		return retu;
+	}
+
+	public static SaveData LoadGame (int id) {
+		string[] filePaths = GetFilePaths ();
+        SaveData ret = null;
 		if(filePaths.Length > 0) {
 			//maneira temporária
 			for (int i = 0; i < filePaths.Length; i++) {
-				ret = LoadGame (filePaths[0]);
+				ret = LoadGame (filePaths[i]);
 				if (ret.id == id)
 					break;	
 			}
@@ -63,20 +95,22 @@ public class SaveSystem : MonoBehaviour {
 			
 		return ret;
 	}
-    public static SaveGameData LoadGame (string path)
+    public static SaveData LoadGame (string path)
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
         using (FileStream fileStream = File.Open (path, FileMode.Open))
         {
-            return (SaveGameData)binaryFormatter.Deserialize (fileStream);
+            return (SaveData)binaryFormatter.Deserialize (fileStream);
         }
     }
 
     public static string[] GetFilePaths ()
     {
-        string folderPath = Path.Combine(Application.persistentDataPath, folderName);
+		string folderPath = Path.Combine(Application.persistentDataPath, folderName);
+		if (!Directory.Exists (folderPath))
+			Directory.CreateDirectory (folderPath);
 
-        return Directory.GetFiles (folderPath, fileExtension);
+        return Directory.GetFiles (folderPath);
     }
 }
