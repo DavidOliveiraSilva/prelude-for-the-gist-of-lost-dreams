@@ -81,13 +81,14 @@ public class SaveSystem : MonoBehaviour {
 		string[] filePaths = GetFilePaths ();
 		//SaveData padrão pra se não houver save no slot
 		retu = new ArrayList();
-		retu.Add(new SaveData(0, "Vazio", 0));
-		retu.Add(new SaveData(1, "Vazio", 0));
-		retu.Add(new SaveData(2, "Vazio", 0));
+		retu.Add(new SaveData(0, "Vazio", -1));
+		retu.Add(new SaveData(1, "Vazio", -1));
+		retu.Add(new SaveData(2, "Vazio", -1));
 
 		if(filePaths.Length > 0) {
 			for (int i = 0; i < filePaths.Length; i++) {
-				retu[i] = LoadGame (filePaths[i]);	
+				SaveData t = LoadGame (filePaths[i]);
+				retu[t.id] = t;	
 			}
 			IComparer comp = new dataComparator();
 			retu.Sort(comp);

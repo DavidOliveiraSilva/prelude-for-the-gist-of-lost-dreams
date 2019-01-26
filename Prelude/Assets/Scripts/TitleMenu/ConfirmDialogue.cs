@@ -17,9 +17,12 @@ public class ConfirmDialogue : MonoBehaviour {
 	private GameObject lastSelected = null;
 	private EventSystem m_EventSystem;
 
+	private bool previousActive = true;
+
 	// Use this for initialization
 	void Start () {
-		gameObject.SetActive(false);
+		if(previousActive)
+			gameObject.SetActive(false);
 		m_EventSystem = EventSystem.current;
 	}
 	
@@ -44,6 +47,7 @@ public class ConfirmDialogue : MonoBehaviour {
 	}
 
 	public void showDialogue() {
+		previousActive = false;
 		gameObject.SetActive(true);
 		//lastSelected = m_EventSystem.lastSelectedGameObject;
 		//m_EventSystem.SetSelectedGameObject(yesBtn);

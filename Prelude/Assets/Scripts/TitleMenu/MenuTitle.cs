@@ -30,6 +30,8 @@ public class MenuTitle : MonoBehaviour {
 		logo.SetActive(false);
 		options.SetActive(false);
 		saves.SetActive(false);
+
+		DontDestroyOnLoad(GameObject.Find("Gamestate"));
 	}
 	
 	// Update is called once per frame
@@ -101,7 +103,7 @@ public class MenuTitle : MonoBehaviour {
 		ArrayList savesData = SaveSystem.LoadAll();
 		for (int i = 0; i < savesData.ToArray().Length; i++) {
 			SaveData tData = (SaveData)savesData[i];
-			print(tData.id.ToString() + " " + tData.lvCount);
+			//print(tData.id + " " + tData.lvCount);
 			saves.transform.GetChild(0).GetChild(tData.id).GetComponent<SaveSlot>().setSaveData(tData);
 		}
 		
