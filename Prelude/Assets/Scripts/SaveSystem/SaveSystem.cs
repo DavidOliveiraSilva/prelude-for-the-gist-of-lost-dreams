@@ -79,11 +79,18 @@ public class SaveSystem : MonoBehaviour {
 	public static ArrayList LoadAll() {
 		ArrayList retu = null;
 		string[] filePaths = GetFilePaths ();
-        
+		//SaveData padrão pra se não houver save no slot
+        SaveData defaulte = new SaveData();
+		defaulte.lvCount = -1;
+
 		if(filePaths.Length > 0) {
 			retu = new ArrayList();
+			retu.Add(defaulte);
+			retu.Add(defaulte);
+			retu.Add(defaulte);
+
 			for (int i = 0; i < filePaths.Length; i++) {
-				retu.Add(LoadGame (filePaths[i]));	
+				retu[i] = LoadGame (filePaths[i]);	
 			}
 			IComparer comp = new dataComparator();
 			retu.Sort(comp);

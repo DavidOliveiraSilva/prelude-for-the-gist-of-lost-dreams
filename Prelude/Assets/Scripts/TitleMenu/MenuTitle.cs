@@ -2,22 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class MenuTitle : MonoBehaviour {
 
 	public GameObject logo;
 	public GameObject options;
+	public GameObject saves;
 	public GameObject anyKey;
 	public GameObject fadeOut;
 	public string startScene = "SampleScene";
 
+	private ArrayList menus = new ArrayList();
 	private bool activeMenu = false;
 	private bool animStarted = false;
+	private EventSystem m_EventSystem;
 
-	// Use this for initialization
+	[SerializeField]
+	public enum MenuType {Options=0, Saves=1};
+
+	void OnEnable() {
+		m_EventSystem = EventSystem.current;
+	}
 	void Start () {
+		menus.Add(options);
+		menus.Add(saves);
 		logo.SetActive(false);
 		options.SetActive(false);
+		saves.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -41,15 +53,17 @@ public class MenuTitle : MonoBehaviour {
 	public void menuReady() {
 		activeMenu = true;
 		animStarted = true;
-		options.SetActive(true);
+		changeActiveMenu((int)MenuType.Options);
 	
 	}
+	//função que inicia o jogo de fato. Depois do fade out terminar
 	public void iniciarJogoFade() {
 		SceneManager.LoadScene(startScene);
 	}
 	public void iniciarJogo() {
 		if(!activeMenu)
 			return;
+			m_EventSystem.enabled = false;
 		fadeOut.GetComponent<Animation>().Play("StartFadeOut");
 	}
 
@@ -61,5 +75,44 @@ public class MenuTitle : MonoBehaviour {
 		#else
 			Application.Quit();
 		#endif
+	}
+
+	public void changeActiveMenu(int menu) {
+		switch ((MenuType)menu)
+		{
+			case (MenuType.Options):
+				closeAllMenus();
+				options.SetActive(true);
+				m_EventSystem.SetSelectedGameObject(options.transform.GetChild(0).gameObject);
+				break;
+			case (MenuType.Saves):
+				closeAllMenus();
+				//preencher os slots com os saves no disco
+				refreshSaveSlots();
+				saves.SetActive(true);
+				m_EventSystem.SetSelectedGameObject(saves.transform.GetChild(1).gameObject);
+				break;
+			default:
+				break;
+		}
+	}
+
+	public void refreshSaveSlots() {
+		ArrayList savesData = SaveSystem.LoadAll();
+		if(savesData != null) {
+			
+			for (int i = 0; i < savesData.ToArray().Length; i++) {
+				SaveData tData = (SaveData)savesData[i];
+				if (tData == null)
+					print("É nulo");
+				saves.transform.GetChild(0).GetChild(tData.id).GetComponent<SaveSlot>().setSaveData(tData);
+			}
+		}
+	}
+
+	public void closeAllMenus() {
+		foreach (GameObject menu in menus) {
+			menu.SetActive(false);
+		}
 	}
 }
