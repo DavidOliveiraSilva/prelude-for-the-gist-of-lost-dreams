@@ -20,6 +20,7 @@ public class MenuTitle : MonoBehaviour {
 
 	[SerializeField]
 	public enum MenuType {Options=0, Saves=1};
+	public MenuType t;
 
 	void OnEnable() {
 		m_EventSystem = EventSystem.current;
