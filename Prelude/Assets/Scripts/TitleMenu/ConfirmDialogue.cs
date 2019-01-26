@@ -20,6 +20,7 @@ public class ConfirmDialogue : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameObject.SetActive(false);
+		m_EventSystem = EventSystem.current;
 	}
 	
 	// Update is called once per frame
@@ -28,24 +29,30 @@ public class ConfirmDialogue : MonoBehaviour {
 	}
 
 	public void confirm() {
+		if (yesCallback != null)
+			yesCallback();
 		hideDialogue();
-		yesCallback();
+		
 		
 	}
 
 	public void cancel() {
+		if (noCallback != null)
+			noCallback();
 		hideDialogue();
-		noCallback();
+		
 	}
 
 	public void showDialogue() {
 		gameObject.SetActive(true);
-		lastSelected = m_EventSystem.lastSelectedGameObject;
-		m_EventSystem.SetSelectedGameObject(yesBtn);
+		//lastSelected = m_EventSystem.lastSelectedGameObject;
+		//m_EventSystem.SetSelectedGameObject(yesBtn);
 	}
 
 	public void hideDialogue() {
 		gameObject.SetActive(false);
-		m_EventSystem.SetSelectedGameObject(lastSelected);
+		//m_EventSystem.SetSelectedGameObject(lastSelected);
+		yesCallback = null;
+		noCallback = null;
 	}
 }

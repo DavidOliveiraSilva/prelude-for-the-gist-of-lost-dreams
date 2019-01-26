@@ -80,15 +80,12 @@ public class SaveSystem : MonoBehaviour {
 		ArrayList retu = null;
 		string[] filePaths = GetFilePaths ();
 		//SaveData padrão pra se não houver save no slot
-        SaveData defaulte = new SaveData();
-		defaulte.lvCount = -1;
+		retu = new ArrayList();
+		retu.Add(new SaveData(0, "Vazio", 0));
+		retu.Add(new SaveData(1, "Vazio", 0));
+		retu.Add(new SaveData(2, "Vazio", 0));
 
 		if(filePaths.Length > 0) {
-			retu = new ArrayList();
-			retu.Add(defaulte);
-			retu.Add(defaulte);
-			retu.Add(defaulte);
-
 			for (int i = 0; i < filePaths.Length; i++) {
 				retu[i] = LoadGame (filePaths[i]);	
 			}

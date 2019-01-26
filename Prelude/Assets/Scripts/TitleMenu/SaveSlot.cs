@@ -10,6 +10,9 @@ public class SaveSlot : MonoBehaviour {
 	private Text lvCount;
 	private SaveData saveData;
 
+	public MenuTitle menu;
+	public ConfirmDialogue confirmSlotDialogue;
+
 	// Use this for initialization
 	void Start () {
 		saveData = null;
@@ -28,17 +31,22 @@ public class SaveSlot : MonoBehaviour {
 			saveName.text = saveData.saveName;
 			lvCount.text = saveData.lvCount.ToString();
 		} else {
+			id.text = saveData.id.ToString();
 			saveName.text = "Vazio";
 			lvCount.text = "0";
 		}
 	}
 
-	
+	public void selectSlot() {
+		confirmSlotDialogue.yesCallback += createNewSave;
+		confirmSlotDialogue.yesCallback += menu.refreshSaveSlots;
+		confirmSlotDialogue.showDialogue();
+	}
 	public void createNewSave() {
 		SaveData novo = new SaveData();
 		novo.id = int.Parse(gameObject.name) - 1;
 		novo.saveName = "save_" + novo.id.ToString();
-		novo.lvCount = 2;
+		novo.lvCount = 0;
 
 		SaveSystem.SaveGame(novo, novo.id);
 	}

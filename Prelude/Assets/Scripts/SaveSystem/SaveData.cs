@@ -9,4 +9,10 @@ public class SaveData {
     public SaveData()
     {
     }
+
+    public SaveData(int id, string saveName, int lvCount) {
+        this.id = id;
+        this.saveName = saveName;
+        this.lvCount = lvCount;
+    }
 }

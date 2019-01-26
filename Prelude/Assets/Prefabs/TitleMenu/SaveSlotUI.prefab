@@ -148,7 +148,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114568174003573522}
-        m_MethodName: createNewSave
+        m_MethodName: selectSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -171,6 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab311f42d4a3eb74395af49aeced20f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menu: {fileID: 0}
+  confirmSlotDialogue: {fileID: 0}
 --- !u!114 &114604138466313350
 MonoBehaviour:
   m_ObjectHideFlags: 1

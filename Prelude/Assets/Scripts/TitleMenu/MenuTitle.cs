@@ -99,15 +99,12 @@ public class MenuTitle : MonoBehaviour {
 
 	public void refreshSaveSlots() {
 		ArrayList savesData = SaveSystem.LoadAll();
-		if(savesData != null) {
-			
-			for (int i = 0; i < savesData.ToArray().Length; i++) {
-				SaveData tData = (SaveData)savesData[i];
-				if (tData == null)
-					print("É nulo");
-				saves.transform.GetChild(0).GetChild(tData.id).GetComponent<SaveSlot>().setSaveData(tData);
-			}
+		for (int i = 0; i < savesData.ToArray().Length; i++) {
+			SaveData tData = (SaveData)savesData[i];
+			print(tData.id.ToString() + " " + tData.lvCount);
+			saves.transform.GetChild(0).GetChild(tData.id).GetComponent<SaveSlot>().setSaveData(tData);
 		}
+		
 	}
 
 	public void closeAllMenus() {
