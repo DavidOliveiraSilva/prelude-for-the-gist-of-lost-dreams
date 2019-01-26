@@ -43,10 +43,24 @@ public class SaveSystem : MonoBehaviour {
 		*/
     }
 
+	//Salvar o jogo pelo ID
+	public static void SaveGame(SaveData data, int id) {
+		string folderPath = Path.Combine(Application.persistentDataPath, folderName);
+		if (!Directory.Exists (folderPath))
+			Directory.CreateDirectory (folderPath);
+
+		//Máximo de 3 slots
+		if (id < 0 && id >= 3)
+			return;
+
+		string dataPath = Path.Combine(folderPath, id.ToString() + fileExtension);       
+		SaveGame (data, dataPath);
+	}
 	public static void SaveGame(SaveData data) {
 		string folderPath = Path.Combine(Application.persistentDataPath, folderName);
 		if (!Directory.Exists (folderPath))
 			Directory.CreateDirectory (folderPath);            
+
 
 		string dataPath = Path.Combine(folderPath, data.saveName + fileExtension);       
 		SaveGame (data, dataPath);
@@ -67,7 +81,6 @@ public class SaveSystem : MonoBehaviour {
 		string[] filePaths = GetFilePaths ();
         
 		if(filePaths.Length > 0) {
-			//maneira temporária
 			retu = new ArrayList();
 			for (int i = 0; i < filePaths.Length; i++) {
 				retu.Add(LoadGame (filePaths[i]));	
@@ -83,14 +96,9 @@ public class SaveSystem : MonoBehaviour {
 	public static SaveData LoadGame (int id) {
 		string[] filePaths = GetFilePaths ();
         SaveData ret = null;
-		if(filePaths.Length > 0) {
+		if(filePaths.Length > 0 && id < filePaths.Length) {
 			//maneira temporária
-			for (int i = 0; i < filePaths.Length; i++) {
-				ret = LoadGame (filePaths[i]);
-				if (ret.id == id)
-					break;	
-			}
-			
+			ret = LoadGame (filePaths[id]);
 		}
 			
 		return ret;

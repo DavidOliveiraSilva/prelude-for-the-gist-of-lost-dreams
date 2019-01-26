@@ -8,9 +8,10 @@ public class SaveLoadTest : MonoBehaviour {
 
 	// Use this for initialization
 	public GameObject slots;
+	public InputField inputField;
 
 	void Start () {
-		
+		refresh();
 	}
 	
 	// Update is called once per frame
@@ -47,6 +48,13 @@ public class SaveLoadTest : MonoBehaviour {
 		{
 			trans.GetChild(s.id).GetComponentInChildren<Text>().text = s.saveName;
 		}
+	}
+
+	public void atualizarSave(int id) {
+		SaveData data = SaveSystem.LoadGame(id);
+		data.saveName = inputField.text;
+		SaveSystem.SaveGame(data, data.id);
+		refresh();
 	}
 }
 
