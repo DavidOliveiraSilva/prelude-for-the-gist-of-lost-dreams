@@ -79,11 +79,16 @@ public class SaveSystem : MonoBehaviour {
 	public static ArrayList LoadAll() {
 		ArrayList retu = null;
 		string[] filePaths = GetFilePaths ();
-        
+		//SaveData padrão pra se não houver save no slot
+		retu = new ArrayList();
+		retu.Add(new SaveData(0, "Vazio", -1));
+		retu.Add(new SaveData(1, "Vazio", -1));
+		retu.Add(new SaveData(2, "Vazio", -1));
+
 		if(filePaths.Length > 0) {
-			retu = new ArrayList();
 			for (int i = 0; i < filePaths.Length; i++) {
-				retu.Add(LoadGame (filePaths[i]));	
+				SaveData t = LoadGame (filePaths[i]);
+				retu[t.id] = t;	
 			}
 			IComparer comp = new dataComparator();
 			retu.Sort(comp);
@@ -112,6 +117,27 @@ public class SaveSystem : MonoBehaviour {
             return (SaveData)binaryFormatter.Deserialize (fileStream);
         }
     }
+
+	public static void DeleteGame(int id) {
+		string[] filePaths = GetFilePaths ();
+		if (filePaths.Length <= 0) {
+			Debug.Log("Não foi possível deletar save de ID: " + id + ". Não existe nenhum slot salvo");
+			return;
+		}
+		string folderPath = Path.Combine(Application.persistentDataPath, folderName);
+		if (!Directory.Exists (folderPath)) {
+			Debug.Log("Não foi possível deletar save de ID: " + id + ". Diretório não existe.");
+			return;
+		}
+		string dataPath = Path.Combine(folderPath, id.ToString() + fileExtension);    
+		if (!File.Exists(dataPath)) {
+			Debug.Log("Não foi possível deletar save de ID: " + id + ". Save não existe.");
+			return;
+		}
+
+		File.Delete(dataPath);
+		
+	}
 
     public static string[] GetFilePaths ()
     {
