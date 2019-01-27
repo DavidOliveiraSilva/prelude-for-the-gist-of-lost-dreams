@@ -49,13 +49,13 @@ public class ConfirmDialogue : MonoBehaviour {
 	public void showDialogue() {
 		previousActive = false;
 		gameObject.SetActive(true);
-		//lastSelected = m_EventSystem.lastSelectedGameObject;
-		//m_EventSystem.SetSelectedGameObject(yesBtn);
+//		lastSelected = m_EventSystem.lastSelectedGameObject;
+		m_EventSystem.SetSelectedGameObject(yesBtn);
 	}
 
 	public void hideDialogue() {
 		gameObject.SetActive(false);
-		//m_EventSystem.SetSelectedGameObject(lastSelected);
+//		m_EventSystem.SetSelectedGameObject(lastSelected);
 		yesCallback = null;
 		noCallback = null;
 	}

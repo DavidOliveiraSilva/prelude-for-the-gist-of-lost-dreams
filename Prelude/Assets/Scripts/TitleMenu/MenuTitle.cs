@@ -90,10 +90,10 @@ public class MenuTitle : MonoBehaviour {
 				break;
 			case (MenuType.Saves):
 				closeAllMenus();
+				saves.SetActive(true);
 				//preencher os slots com os saves no disco
 				refreshSaveSlots();
-				saves.SetActive(true);
-				m_EventSystem.SetSelectedGameObject(saves.transform.GetChild(1).gameObject);
+				m_EventSystem.SetSelectedGameObject(saves.transform.GetChild(0).GetChild(0).gameObject);
 				break;
 			default:
 				break;

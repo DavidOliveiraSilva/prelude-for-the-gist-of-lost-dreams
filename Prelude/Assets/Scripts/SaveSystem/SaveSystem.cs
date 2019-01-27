@@ -118,6 +118,27 @@ public class SaveSystem : MonoBehaviour {
         }
     }
 
+	public static void DeleteGame(int id) {
+		string[] filePaths = GetFilePaths ();
+		if (filePaths.Length <= 0) {
+			Debug.Log("Não foi possível deletar save de ID: " + id + ". Não existe nenhum slot salvo");
+			return;
+		}
+		string folderPath = Path.Combine(Application.persistentDataPath, folderName);
+		if (!Directory.Exists (folderPath)) {
+			Debug.Log("Não foi possível deletar save de ID: " + id + ". Diretório não existe.");
+			return;
+		}
+		string dataPath = Path.Combine(folderPath, id.ToString() + fileExtension);    
+		if (!File.Exists(dataPath)) {
+			Debug.Log("Não foi possível deletar save de ID: " + id + ". Save não existe.");
+			return;
+		}
+
+		File.Delete(dataPath);
+		
+	}
+
     public static string[] GetFilePaths ()
     {
 		string folderPath = Path.Combine(Application.persistentDataPath, folderName);
