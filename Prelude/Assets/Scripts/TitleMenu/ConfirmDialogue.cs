@@ -11,6 +11,7 @@ public class ConfirmDialogue : MonoBehaviour {
 	public choiceAction yesCallback;
 	//delegate executada quando se clilca em não
 	public choiceAction noCallback;
+	public choiceAction postCallback;
 
 	public GameObject yesBtn;
 
@@ -35,6 +36,7 @@ public class ConfirmDialogue : MonoBehaviour {
 		if (yesCallback != null)
 			yesCallback();
 		hideDialogue();
+			
 		
 		
 	}
@@ -49,14 +51,23 @@ public class ConfirmDialogue : MonoBehaviour {
 	public void showDialogue() {
 		previousActive = false;
 		gameObject.SetActive(true);
-//		lastSelected = m_EventSystem.lastSelectedGameObject;
-		m_EventSystem.SetSelectedGameObject(yesBtn);
+
+		EventSystem.current.SetSelectedGameObject(yesBtn);
+	}
+
+	public void showDialogue(GameObject returnObject) {
+		lastSelected = returnObject;
+		showDialogue();
 	}
 
 	public void hideDialogue() {
-		gameObject.SetActive(false);
-//		m_EventSystem.SetSelectedGameObject(lastSelected);
+		EventSystem.current.SetSelectedGameObject(lastSelected);
 		yesCallback = null;
 		noCallback = null;
+		if(postCallback != null)
+			postCallback();
+		postCallback = null;
+		gameObject.SetActive(false);
+		
 	}
 }

@@ -11,7 +11,7 @@ public class SaveSlot : MonoBehaviour {
 	public SaveData saveData;
 
 	public MenuTitle menu;
-	public SlotSelection slotSelection;
+	public SlotCrud slotSelection;
 
 
 

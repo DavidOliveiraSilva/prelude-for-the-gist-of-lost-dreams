@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SlotSelection : MonoBehaviour {
+public class SlotCrud : MonoBehaviour {
 
 	public GameObject continueBtn;
 	public MenuTitle menu;
@@ -27,6 +27,10 @@ public class SlotSelection : MonoBehaviour {
 		m_EventSystem = EventSystem.current;
 	}
 	
+	void OnEnabled() {
+		EventSystem.current.SetSelectedGameObject(continueBtn);
+	}
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -39,12 +43,13 @@ public class SlotSelection : MonoBehaviour {
 
 		previousActive = false;
 		gameObject.SetActive(true);
-		m_EventSystem.SetSelectedGameObject(continueBtn);
 	}
 
 	public void hideScreen() {
 		menu.refreshSaveSlots();
+		EventSystem.current.SetSelectedGameObject(selectedSlot.gameObject);
 		gameObject.SetActive(false);
+		
 	}
 
 	public void conitnueBtnSelection() {
@@ -58,12 +63,12 @@ public class SlotSelection : MonoBehaviour {
 
 	public void deleteBtnSelection() {
 		confirmDialogue.yesCallback += deleteTrue;
-		confirmDialogue.showDialogue();
+		confirmDialogue.postCallback += hideScreen;
+		confirmDialogue.showDialogue(continueBtn);
 	}
 
 	public void deleteTrue() {
 		SaveSystem.DeleteGame(selectedSlot.saveData.id);
 		selectedSlot.initializeSaveData();
-		hideScreen();
 	}
 }
