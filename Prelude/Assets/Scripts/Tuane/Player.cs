@@ -53,7 +53,7 @@ public class Player : MonoBehaviour {
 
         lifeTime -= Time.deltaTime;
         if(lifeTime <= 0) {
-            dead = true;
+            startDeath();
         }
 
         if(dashing > 0) {
@@ -89,4 +89,8 @@ public class Player : MonoBehaviour {
         hasControl = false;
     }
     
+
+    public void startDeath() {
+        dead = true;
+    }
 }
