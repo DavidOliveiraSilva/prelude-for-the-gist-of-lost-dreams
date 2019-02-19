@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
     public float speed;
@@ -92,5 +93,12 @@ public class Player : MonoBehaviour {
 
     public void startDeath() {
         dead = true;
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        if (col.gameObject.tag.Equals("Thorn")) {
+            startDeath();
+        }
     }
 }
