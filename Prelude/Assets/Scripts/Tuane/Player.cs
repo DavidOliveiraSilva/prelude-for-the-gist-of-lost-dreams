@@ -103,5 +103,8 @@ public class Player : MonoBehaviour {
         if (col.gameObject.tag.Equals("Mortal Cell")) {
             startDeath();
         }
+        if (col.gameObject.tag.Equals("Purple Flower")) {
+            startDeath();
+        }
     }
 }
