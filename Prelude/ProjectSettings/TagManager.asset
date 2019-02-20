@@ -10,6 +10,9 @@ TagManager:
   - Thorn
   - Mortal Cell
   - Purple Flower
+  - Laser
+  - Laser Ray
+  - EndLaser
   layers:
   - Default
   - TransparentFX
@@ -19,9 +22,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - StartLaser
+  - EndLaser
+  - Player
   - 
   - 
   - 
