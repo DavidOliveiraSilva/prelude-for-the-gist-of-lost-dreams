@@ -9,6 +9,7 @@ TagManager:
   - Door
   - Thorn
   - Mortal Cell
+  - Purple Flower
   layers:
   - Default
   - TransparentFX
