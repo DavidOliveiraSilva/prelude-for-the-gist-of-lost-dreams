@@ -13,6 +13,8 @@ TagManager:
   - Laser
   - Laser Ray
   - EndLaser
+  - Moving Box
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -25,8 +27,8 @@ TagManager:
   - StartLaser
   - EndLaser
   - Player
-  - 
-  - 
+  - Wall
+  - MovingBox
   - 
   - 
   - 

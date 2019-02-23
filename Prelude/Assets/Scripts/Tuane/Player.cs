@@ -66,7 +66,48 @@ public class Player : MonoBehaviour {
                 rb.velocity = new Vector2(0, 0);
             }
         }
-	}
+
+        
+        
+    }
+
+    public void FixedUpdate() {
+        //CHECANDO COLISÃO COM CAIXA E PAREDE (QUANDO A TUANE É IMPRENSADA PELA CAIXA E PAREDE)
+        int layermask = 1 << 10;
+        layermask = ~layermask;
+        RaycastHit2D rcLeft = Physics2D.Linecast(transform.position, new Vector3(transform.position.x - 0.5f, transform.position.y, 0), layermask);
+        RaycastHit2D rcRight = Physics2D.Linecast(transform.position, new Vector3(transform.position.x + 0.5f, transform.position.y, 0), layermask);
+        RaycastHit2D rcUp = Physics2D.Linecast(transform.position, new Vector3(transform.position.x, transform.position.y + 0.5f, 0), layermask);
+        RaycastHit2D rcDown = Physics2D.Linecast(transform.position, new Vector3(transform.position.x, transform.position.y - 0.5f, 0), layermask);
+
+        if (rcLeft && rcRight) {
+            if (rcLeft.transform != null && rcRight.transform != null) {
+                if ((rcLeft.transform.gameObject.tag == "Moving Box" && rcRight.transform.gameObject.tag == "Wall") ||
+                        (rcLeft.transform.gameObject.tag == "Wall" && rcRight.transform.gameObject.tag == "Moving Box") ||
+                            (rcLeft.transform.gameObject.tag == "Moving Box" && rcRight.transform.gameObject.tag == "Moving Box")) {
+                    startDeath();
+                }
+            }
+        }
+        if (rcUp && rcDown) {
+            if (rcUp.transform != null && rcDown.transform != null) {
+                if ((rcUp.transform.gameObject.tag == "Moving Box" && rcDown.transform.gameObject.tag == "Wall") ||
+                        (rcUp.transform.gameObject.tag == "Wall" && rcDown.transform.gameObject.tag == "Moving Box") ||
+                            (rcUp.transform.gameObject.tag == "Moving Box" && rcDown.transform.gameObject.tag == "Moving Box")) {
+                    startDeath();
+                }
+            }
+        }
+        Debug.DrawLine(transform.position, new Vector3(transform.position.x - 0.5f, transform.position.y, 0));
+        Debug.DrawLine(transform.position, new Vector3(transform.position.x + 0.5f, transform.position.y, 0));
+        Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y + 0.5f, 0));
+        Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - 0.5f, 0));
+    }
+    void CheckRC(RaycastHit2D rc) {
+        if(rc.transform != null) {
+            print(rc.transform.tag);
+        }
+    }
     public void AddLifeTime(float value) {
         lifeTime += value;
         if(lifeTime > maxLifeTime) {
