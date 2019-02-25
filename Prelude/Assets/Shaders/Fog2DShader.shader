@@ -1,9 +1,12 @@
-﻿Shader "Custom/WaterTestShader"
+﻿Shader "Custom/Fog2DShader"
 {
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_HeightCutoff ("Height Cutoff", float) = 1.0
+		_FogColor ("Fog Color", Color) = (1, 1, 1, 1)
+		_UvRange ("UV Range", Range (1, 200)) = 20
+		_FogStrenght ("Fog Strenght", Range(0, 1)) = 0.5
+		_PlayerPos ("Player Position", vector) = (0, 0, 0)
 	}
 	SubShader
 	{
@@ -12,6 +15,7 @@
 
 		ZWrite Off
 		Blend SrcAlpha OneMinusSrcAlpha
+
 
 		Pass
 		{
@@ -44,7 +48,7 @@
 						(d - b) * u.x * u.y;
 			}
 
-			#define OCTAVES 6
+			#define OCTAVES 4
 			float fbm (float2 st) {
 				// Initial values
 				float value = 0.0;
@@ -54,7 +58,7 @@
 				// Loop of octaves
 				for (int i = 0; i < OCTAVES; i++) {
 					value += amplitude * noise(st);
-					st *= 2.;
+					st *= 6.;
 					amplitude *= .5;
 				}
 				return value;
@@ -69,50 +73,36 @@
 			struct v2f
 			{
 				float2 uv : TEXCOORD0;
-				float4 screenPos : TEXCOORD1;
 				float4 vertex : SV_POSITION;
 			};
 
 			sampler2D _MainTex;
-			float _HeightCutoff;
-
+			fixed4 _FogColor;
+			int _UvRange;
+			float _FogStrenght;
+			float3 _PlayerPos;
+			
 			v2f vert (appdata v)
 			{
 				v2f o;
-				
-				float heightFactor = v.vertex.x > _HeightCutoff;
-				
-
-				//v.vertex.y += (sin(_Time.y * 2 * v.vertex.x)  ) * heightFactor;
-
-				//v.vertex.y += sin(fbm(float2(v.vertex.x+sin(_Time.y), v.vertex.y+cos(_Time.y))))*heightFactor;
-
-				float y = v.vertex.y;
-				float x = v.vertex.x;
-
-				
-
-				//v.vertex.y += y;
-				
-
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
-				o.screenPos = ComputeScreenPos(v.vertex);
-
+				
 				return o;
 			}
-
+			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				float2 fuv = i.uv * 20;
+				//fixed4 col = tex2D(_MainTex, i.uv);
+				float2 cuv = i.uv * _UvRange;
+				float2 motion = float2(fbm(cuv + _Time.y/15), fbm(cuv + _Time.y/10));
 
-				fixed4 col = tex2D(_MainTex, i.uv);
+				fixed4 col = _FogColor;
 
-				//float2 motion = float2(  );
+				float final = fbm((motion + cuv) * sin(_Time.y/200));
 
-				col.rgb = float3(.4, .4, .7);
-				col.a = fbm(i.uv);
-
+				//fixed4 col = tex2D(_MainTex, i.uv * final);
+				col.a = final*_FogStrenght;
 				return col;
 			}
 			ENDCG
