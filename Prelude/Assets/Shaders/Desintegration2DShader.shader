@@ -5,6 +5,7 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_AlphaCutoff ("Alpha Cutoff", Range(0, 1)) = 1
 		_DissolveRange ("Dissolve Range", Range(0, 0.5)) = 0.1
+		_EdgeColor ("Edge Color", Color) = (1.0, 1.0, 1.0, 1.0)
 	}
 	SubShader
 	{
@@ -85,6 +86,7 @@
 			sampler2D _MainTex;
 			float _AlphaCutoff;
 			float _DissolveRange;
+			fixed4 _EdgeColor;
 			
 			v2f vert (appdata v)
 			{
@@ -97,14 +99,27 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
+				//Pegando a cor do pixel da textura
 				fixed4 col = tex2D(_MainTex, i.uv);
-				
+				//Pegando o valor da "textura" de noise para ser aplicado como alpha
 				float alpha = noise(i.uv*10);
 
-				col.a *= _AlphaCutoff < alpha;
+				//Criação da borda
+				col.rgb *= (_AlphaCutoff < alpha);
+				//Coloração da borda
+				col.rgb = col.rgb == (0.0, 0.0, 0.0) ? _EdgeColor : col.rgb;
 
+				//Multiplicando o alpha da textura original pelo máximo entre _AlphaCutoff e o alpha do noise
+				//Isso resulta no alpha da textura ou em 1, de acordo com o valor de cutoff
+				//DissolveRange causa um atraso em relação ao preenchimento da cor, fazendo com que crie uma borda
+				col.a *= _AlphaCutoff < alpha + _DissolveRange;
+				
+
+
+				//Colocando um fade out no final de tudo
 				//float finalAlpha = col.a * abs(1- (_AlphaCutoff * _AlphaCutoff * (3.0 - 2.0 * _AlphaCutoff)));
-				float finalAlpha = col.a * abs(1 - smoothstep(0.8, 1.0, _AlphaCutoff) );
+				float finalAlpha = col.a * abs(1 - smoothstep(0.8, 1.0, _AlphaCutoff));
+				
 				//float finalAlpha = col.a * abs(1-_AlphaCutoff);
 				col.a = finalAlpha;
 
