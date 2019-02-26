@@ -1,12 +1,10 @@
-﻿Shader "Custom/Fog2DShader"
+﻿Shader "Custom/Desintegration2DShader"
 {
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_FogColor ("Fog Color", Color) = (1, 1, 1, 1)
-		_UvRange ("UV Range", Range (1, 200)) = 20
-		_FogStrenght ("Fog Strenght", Range(0, 1)) = 0.5
-		_PlayerPos ("Player Position", vector) = (0, 0, 0)
+		_AlphaCutoff ("Alpha Cutoff", Range(0, 1)) = 1
+		_DissolveRange ("Dissolve Range", Range(0, 0.5)) = 0.1
 	}
 	SubShader
 	{
@@ -64,6 +62,14 @@
 				return value;
 			}
 
+			float max (float a, float b) {
+				if(a < b) {
+					return a;
+				} else {
+					return b;
+				}
+			}
+
 			struct appdata
 			{
 				float4 vertex : POSITION;
@@ -77,10 +83,8 @@
 			};
 
 			sampler2D _MainTex;
-			fixed4 _FogColor;
-			int _UvRange;
-			float _FogStrenght;
-			float3 _PlayerPos;
+			float _AlphaCutoff;
+			float _DissolveRange;
 			
 			v2f vert (appdata v)
 			{
@@ -93,16 +97,17 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				//fixed4 col = tex2D(_MainTex, i.uv);
-				float2 cuv = i.uv * _UvRange;
-				float2 motion = float2(fbm(cuv + _Time.y/10), fbm(cuv + _Time.y/2));
+				fixed4 col = tex2D(_MainTex, i.uv);
+				
+				float alpha = noise(i.uv*10);
 
-				fixed4 col = _FogColor;
+				col.a *= _AlphaCutoff < alpha;
 
-				float final = fbm(motion + cuv);
+				//float finalAlpha = col.a * abs(1- (_AlphaCutoff * _AlphaCutoff * (3.0 - 2.0 * _AlphaCutoff)));
+				float finalAlpha = col.a * abs(1 - smoothstep(0.8, 1.0, _AlphaCutoff) );
+				//float finalAlpha = col.a * abs(1-_AlphaCutoff);
+				col.a = finalAlpha;
 
-				//fixed4 col = tex2D(_MainTex, i.uv * final);
-				col.a = final*_FogStrenght;
 				return col;
 			}
 			ENDCG
