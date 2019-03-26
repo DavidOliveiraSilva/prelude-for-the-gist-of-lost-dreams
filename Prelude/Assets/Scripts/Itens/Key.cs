@@ -10,6 +10,9 @@ public class Key : MonoBehaviour {
     private bool dead;
     private float alpha;
     private float dyingConstant;
+    [Range(0.0f, 1.0f)]
+    public float springDamping;
+    public float springDistance;
 	// Use this for initialization
 	void Start () {
         connected = false;
@@ -42,7 +45,8 @@ public class Key : MonoBehaviour {
             gameObject.AddComponent<SpringJoint2D>();
             sj = gameObject.GetComponent<SpringJoint2D>();
             sj.connectedBody = collision.gameObject.GetComponent<Rigidbody2D>();
-            sj.distance = 1;
+            sj.dampingRatio = springDamping;
+            sj.distance = springDamping;
         }
         if(collision.tag == "Door") {
             if (connected) {
