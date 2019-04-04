@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: EspinhoTIle
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 783fe0f987f7c4843bf764a48da1b173, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Transform:
     e00: 1
     e01: 0
