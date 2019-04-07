@@ -66,8 +66,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1379510974224194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.912, y: 1.424, z: 0.0061525134}
-  m_LocalScale: {x: 2.2324307, y: 2.210778, z: 1}
+  m_LocalPosition: {x: 388.47, y: -29.973, z: 0.0061525134}
+  m_LocalScale: {x: 2.932384, y: 8.023847, z: 1}
   m_Children:
   - {fileID: 4256932580944148}
   m_Father: {fileID: 0}
@@ -109,7 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9709acec9611e934095e7e8cf446e9c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
 --- !u!198 &198656982930739406
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -295,8 +294,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.5246529, g: 0.7213877, b: 0.8490566, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      minColor: {r: 0, g: 0.07570847, b: 0.7075472, a: 1}
+      maxColor: {r: 1, g: 0.97654533, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -733,7 +732,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 5
     enabled: 1
-    type: 4
+    type: 5
     angle: 5.986541
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -741,7 +740,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Scale: {x: 1, y: 7.8975306, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -1322,7 +1321,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -2591,7 +2590,7 @@ ParticleSystem:
     strength:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: -0.05
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4669,7 +4668,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 1d0d52681b5e14f4a93f952176a60404, type: 2}
-  - {fileID: 0}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
