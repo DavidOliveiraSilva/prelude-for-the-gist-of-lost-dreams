@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97b8d3a7a3aa4b47969d9830de144bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 10
+  duration: 5
   release: {fileID: 1985335588169196, guid: 18bfeace86d86d2478f3e5d425a1f2d3, type: 2}
   dead: 0
 --- !u!198 &198549448478769290

@@ -72,7 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   purplePetal: {fileID: 1310144968276558, guid: 574049e60ca75f5419a35d44a0a173f9,
     type: 2}
-  GenerateFreq: 5
+  GenerateFreq: 2.5
   PetalSpeed: 80
 --- !u!198 &198213846631248652
 ParticleSystem:
