@@ -16,8 +16,15 @@ public class Player : MonoBehaviour {
     private bool hasControl;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-	// Use this for initialization
-	void Start () {
+    private CheckpointInfo checkpointinfo;
+    // Use this for initialization
+    void Start () {
+        checkpointinfo = CheckpointInfo.instance;
+        if (checkpointinfo.ativado) {
+            transform.position = new Vector3(checkpointinfo.lastPoint.x, checkpointinfo.lastPoint.y, transform.position.z);
+        } else {
+            transform.position = new Vector3(checkpointinfo.startposition.x, checkpointinfo.startposition.y, transform.position.z);
+        }
         dashing = 0;
         hasControl = true;
         rb = GetComponent<Rigidbody2D>();
